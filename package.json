@@ -1,16 +1,18 @@
 {
   "name": "metro2033-board-game",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pixi/graphics-extras": "^6.5.6",
+    "pixi.js": "^6.5.6",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-pixi-fiber": "^1.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
@@ -19,6 +21,6 @@
     "prettier": "^2.7.1",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
-    "vite-esbuild-typescript-checker": "^1.0.0"
+    "vite-plugin-checker": "^0.5.1"
   }
 }

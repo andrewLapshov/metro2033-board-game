@@ -1,11 +1,20 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { VitePlugin as TSCheckerPlugin } from 'vite-esbuild-typescript-checker';
+import checker from 'vite-plugin-checker';
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
         react(),
-        TSCheckerPlugin(),
+        checker({
+            typescript: true,
+            overlay: {
+                initialIsOpen: false,
+            },
+        }),
     ],
+    server: {
+        host: 'localhost',
+        port: 3000,
+    },
 });
