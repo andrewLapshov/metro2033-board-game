@@ -4,8 +4,9 @@ import * as PIXI from 'pixi.js';
 export const Station = CustomPIXIComponent<
     PIXI.Graphics,
     {
-        x: number;
-        y: number;
+        x?: number;
+        y?: number;
+        coords?: Coords;
         radius?: number;
         fill: number;
         zIndex: number;
@@ -14,7 +15,14 @@ export const Station = CustomPIXIComponent<
     {
         customDisplayObject: () => new PIXI.Graphics(),
         customApplyProps: function (instance, oldProps, newProps) {
-            const { x, y, radius = 20, fill, zIndex } = newProps;
+            const { x: dX, y: dY, coords, radius = 20, fill, zIndex } = newProps;
+
+            const x = dX ?? coords?.[0];
+            const y = dY ?? coords?.[1];
+
+            if (!x || !y) {
+                return;
+            }
 
             instance.beginFill(0xffffff);
             instance.lineStyle(1, 0x0000);

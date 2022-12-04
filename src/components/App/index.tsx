@@ -95,26 +95,20 @@ const App = () => {
             <Container sortableChildren={true}>
                 {line8.map(({ startArc, endArc }, idx) => {
                     return (
-                        <Fragment key={idx}>
-                            <TorusArc
-                                x={center[0]}
-                                y={center[1]}
-                                outerRadius={TORUS_RADIUS}
-                                innerRadius={TORUS_RADIUS - LINE_WIDTH}
-                                startArc={startArc}
-                                endArc={endArc}
-                                fill={0x8f1120}
-                                zIndex={1}
-                            />
-                            <Station
-                                x={center[0] + TORUS_LINE_CENTER * Math.cos(endArc)}
-                                y={center[1] + TORUS_LINE_CENTER * Math.sin(endArc)}
-                                fill={0x8f1120}
-                                zIndex={3}
-                            />
-                        </Fragment>
+                        <TorusArc
+                            key={idx}
+                            x={center[0]}
+                            y={center[1]}
+                            outerRadius={TORUS_RADIUS}
+                            innerRadius={TORUS_RADIUS - LINE_WIDTH}
+                            startArc={startArc}
+                            endArc={endArc}
+                            fill={0x8f1120}
+                            zIndex={1}
+                        />
                     );
                 })}
+
                 {/* Red line */}
                 <Line
                     x={center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(135)) - 100}
@@ -127,12 +121,35 @@ const App = () => {
                         ],
                     ]}
                 />
+
                 <Station
-                    x={center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(135)) + 30}
-                    y={center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(135)) - 30}
+                    x={center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(315))}
+                    y={center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(315))}
                     fill={0x8f1120}
                     zIndex={3}
                 />
+
+                <StationHub
+                    zIndex={2}
+                    fill={0xffffff}
+                    pathMap={[
+                        {
+                            coords: [
+                                center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(135)),
+                                center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(135)),
+                            ],
+                            path: ['bottomRight', 'topLeft'],
+                        },
+                        {
+                            coords: [
+                                center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(135)) + 30,
+                                center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(135)) - 30,
+                            ],
+                            path: ['topLeft', 'bottomRight'],
+                        },
+                    ]}
+                />
+
                 <Station
                     x={center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(135)) + 70}
                     y={center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(135)) - 70}
@@ -157,40 +174,39 @@ const App = () => {
                 <StationHub
                     zIndex={2}
                     fill={0xffffff}
-                    path={[
-                        center[0] - 125,
-                        barrikadnaya[1],
-                        center[0] - 100,
-                        barrikadnaya[1] - 40,
-                        center[0] - 75,
-                        barrikadnaya[1],
+                    pathMap={[
+                        { coords: [center[0] - 125, barrikadnaya[1]], path: ['bottom', 'topLeft'] },
+                        { coords: [center[0] - 100, barrikadnaya[1] - 40], path: ['topLeft', 'topRight'] },
+                        { coords: [center[0] - 75, barrikadnaya[1]], path: ['topRight', 'bottom'] },
                     ]}
                 />
-                <Station x={center[0] - 125} y={barrikadnaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] - 100} y={barrikadnaya[1] - 40} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] - 75} y={barrikadnaya[1]} fill={0x8f1120} zIndex={3} />
+                <Station
+                    x={center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(225))}
+                    y={center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(225))}
+                    fill={0x8f1120}
+                    zIndex={3}
+                />
 
-                <Station x={center[0] + 30} y={center[1] + 240} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] + 30} y={center[1] + 290} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] + 70} y={center[1] + 265} fill={0x8f1120} zIndex={3} />
                 <StationHub
                     zIndex={2}
                     fill={0xffffff}
-                    path={[
-                        center[0] + 30,
-                        center[1] + 240,
-                        center[0] + 30,
-                        center[1] + 290,
-                        center[0] + 70,
-                        center[1] + 265,
+                    pathMap={[
+                        { coords: [center[0] + 30, center[1] + 240], path: ['bottomLeft', 'topRight'] },
+                        { coords: [center[0] + 70, center[1] + 265], path: ['topRight', 'bottomRight'] },
+                        { coords: [center[0] + 30, center[1] + 290], path: ['bottomRight', 'topLeft'] },
                     ]}
                 />
-                <Station x={paveletskaya[0]} y={paveletskaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station
-                    x={paveletskaya[0] + 30}
-                    y={paveletskaya[1] + 30}
-                    fill={0x8f1120}
-                    zIndex={3}
+
+                <StationHub
+                    zIndex={2}
+                    fill={0xffffff}
+                    pathMap={[
+                        { coords: [paveletskaya[0], paveletskaya[1]], path: ['bottomLeft', 'topRight'] },
+                        {
+                            coords: [paveletskaya[0] + 30, paveletskaya[1] + 30],
+                            path: ['topRight', 'bottomLeft'],
+                        },
+                    ]}
                 />
 
                 {/* Yellow line */}
@@ -217,45 +233,36 @@ const App = () => {
                         ],
                     ]}
                 />
-                <Station
-                    x={barrikadnaya[0] - 45}
-                    y={barrikadnaya[1] - 45}
-                    fill={0x8f1120}
-                    zIndex={3}
-                />
-                <Station
-                    x={barrikadnaya[0] - 90}
-                    y={barrikadnaya[1] - 90}
-                    fill={0x8f1120}
-                    zIndex={3}
-                />
-                <Station x={barrikadnaya[0]} y={barrikadnaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station x={barrikadnaya[0] + 45} y={barrikadnaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] + 75} y={barrikadnaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] + 105} y={barrikadnaya[1] + 30} fill={0x8f1120} zIndex={3} />
+                <Station x={barrikadnaya[0] - 45} y={barrikadnaya[1] - 45} fill={0x8f1120} zIndex={3} />
+                <Station x={barrikadnaya[0] - 90} y={barrikadnaya[1] - 90} fill={0x8f1120} zIndex={3} />
 
-                <Station x={taganskaya[0]} y={taganskaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station x={taganskaya[0] - 35} y={taganskaya[1] + 35} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] + 350} y={center[1] + 265} fill={0x8f1120} zIndex={3} />
                 <StationHub
                     zIndex={2}
                     fill={0xffffff}
-                    path={[
-                        taganskaya[0],
-                        taganskaya[1],
-                        taganskaya[0] - 35,
-                        taganskaya[1] + 35,
-                        center[0] + 350,
-                        center[1] + 265,
+                    pathMap={[
+                        { coords: [barrikadnaya[0], barrikadnaya[1]], path: ['bottomRight', 'topRight'] },
+                        { coords: [barrikadnaya[0] + 45, barrikadnaya[1]], path: ['topLeft', 'bottomLeft'] },
                     ]}
                 />
 
-                {/*<Station*/}
-                {/*    x={center[0] - TORUS_LINE_CENTER}*/}
-                {/*    y={center[1] - 75}*/}
-                {/*    fill={0x8f1120}*/}
-                {/*    zIndex={3}*/}
-                {/*/>*/}
+                <StationHub
+                    zIndex={2}
+                    fill={0xffffff}
+                    pathMap={[
+                        { coords: [center[0] + 75, barrikadnaya[1]], path: ['bottomLeft', 'topRight'] },
+                        { coords: [center[0] + 105, barrikadnaya[1] + 30], path: ['topRight', 'bottomLeft'] },
+                    ]}
+                />
+
+                <StationHub
+                    zIndex={2}
+                    fill={0xffffff}
+                    pathMap={[
+                        { coords: [taganskaya[0] - 35, taganskaya[1] + 35], path: ['bottom', 'top'] },
+                        { coords: [taganskaya[0], taganskaya[1]], path: ['left', 'bottomRight'] },
+                        { coords: [center[0] + 350, center[1] + 265], path: ['topRight', 'left'] },
+                    ]}
+                />
 
                 {/* Gray line */}
                 <Line
@@ -267,47 +274,95 @@ const App = () => {
                         [center[0] - 100, center[1] - 115],
                         [
                             center[0] + 5,
-                            kurskayaHanza[1] +
-                                (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)),
+                            kurskayaHanza[1] + (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)),
+                        ],
+                        [
+                            center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(250)) - 40,
+                            center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(250)) - 40,
+                        ],
+                        [
+                            center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(250)) - 40,
+                            center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(250)) - 90,
                         ],
                     ]}
                 />
+
                 <Station
-                    x={center[0] + 5}
-                    y={kurskayaHanza[1] + (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225))}
+                    coords={[
+                        center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(250)) - 40,
+                        center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(250)) - 90,
+                    ]}
                     fill={0x8f1120}
                     zIndex={3}
                 />
-                <Station x={serpuhovskaya[0]} y={serpuhovskaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station
-                    x={serpuhovskaya[0]}
-                    y={serpuhovskaya[1] + 45}
-                    fill={0x8f1120}
-                    zIndex={3}
+
+                <StationHub
+                    zIndex={2}
+                    pathMap={[
+                        {
+                            coords: [
+                                center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(250)) - 40,
+                                center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(250)) - 40,
+                            ],
+                            path: ['bottom', 'right'],
+                        },
+                        {
+                            coords: [
+                                center[0] + TORUS_LINE_CENTER * Math.cos(Math.radians(250)),
+                                center[1] + TORUS_LINE_CENTER * Math.sin(Math.radians(250)),
+                            ],
+                            path: ['top', 'left'],
+                        },
+                    ]}
+                />
+
+                <StationHub
+                    zIndex={2}
+                    pathMap={[
+                        {
+                            coords: [
+                                center[0] + 5,
+                                kurskayaHanza[1] + (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)),
+                            ],
+                            path: ['bottomRight', 'topRight'],
+                        },
+                        {
+                            coords: [
+                                kurskayaHanza[0] + (TORUS_LINE_CENTER + 50) * Math.cos(Math.radians(225)),
+                                kurskayaHanza[1] + (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)),
+                            ],
+                            path: ['topLeft', 'bottomLeft'],
+                        },
+                    ]}
+                />
+
+                <StationHub
+                    zIndex={2}
+                    pathMap={[
+                        { coords: [serpuhovskaya[0], serpuhovskaya[1]], path: ['bottomLeft', 'bottomRight'] },
+                        { coords: [serpuhovskaya[0], serpuhovskaya[1] + 45], path: ['topRight', 'topLeft'] },
+                    ]}
                 />
 
                 {/* Center */}
-                <Station x={center[0]} y={center[1]} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] + 30} y={center[1] + 30} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] + 60} y={center[1] + 60} fill={0x8f1120} zIndex={3} />
+                <StationHub
+                    zIndex={2}
+                    pathMap={[
+                        { coords: [center[0], center[1]], path: ['bottomLeft', 'topRight'] },
+                        { coords: [center[0] + 30, center[1] + 30], path: ['topRight', 'topRight'] },
+                        { coords: [center[0] + 60, center[1] + 60], path: ['topRight', 'bottomLeft'] },
+                    ]}
+                />
 
                 {/* Polis */}
-                <Station x={center[0] - 60} y={center[1] + 60} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] - 140} y={center[1] + 60} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] - 100} y={center[1] + 100} fill={0x8f1120} zIndex={3} />
-                <Station x={center[0] - 100} y={center[1] + 20} fill={0x8f1120} zIndex={3} />
                 <StationHub
                     zIndex={2}
                     fill={0xffffff}
-                    path={[
-                        center[0] - 60,
-                        center[1] + 60,
-                        center[0] - 100,
-                        center[1] + 20,
-                        center[0] - 140,
-                        center[1] + 60,
-                        center[0] - 100,
-                        center[1] + 100,
+                    pathMap={[
+                        { coords: [center[0] - 140, center[1] + 60], path: ['bottomLeft', 'topLeft'] },
+                        { coords: [center[0] - 100, center[1] + 20], path: ['topLeft', 'topRight'] },
+                        { coords: [center[0] - 60, center[1] + 60], path: ['topRight', 'bottomRight'] },
+                        { coords: [center[0] - 100, center[1] + 100], path: ['bottomRight', 'bottomLeft'] },
                     ]}
                 />
 
@@ -323,6 +378,8 @@ const App = () => {
                         ],
                     ]}
                 />
+                <Station x={center[0] - 180} y={center[1] + 20} fill={0x8f1120} zIndex={3} />
+                <Station x={center[0] - 280} y={center[1] + 20} fill={0x8f1120} zIndex={3} />
                 <Station
                     x={center[0] - 280 + TORUS_LINE_CENTER * Math.cos(Math.radians(135))}
                     y={center[1] + 20 + TORUS_LINE_CENTER * Math.sin(Math.radians(135))}
@@ -343,20 +400,23 @@ const App = () => {
                         kurskayaHanza,
                     ]}
                 />
+                <Station coords={[center[0] - 240, center[1] + 60]} fill={0x8f1120} zIndex={3} />
 
-                <Station
-                    x={kievskayaHanza[0] - 40}
-                    y={kievskayaHanza[1] + 40}
-                    fill={0x8f1120}
-                    zIndex={3}
+                <StationHub
+                    zIndex={2}
+                    pathMap={[
+                        {
+                            coords: [kievskayaHanza[0] - 40, kievskayaHanza[1] - 40],
+                            path: ['bottomLeft', 'right'],
+                        },
+                        { coords: [kievskayaHanza[0], kievskayaHanza[1]], path: ['top', 'bottom'] },
+                        {
+                            coords: [kievskayaHanza[0] - 40, kievskayaHanza[1] + 40],
+                            path: ['right', 'topLeft'],
+                        },
+                    ]}
                 />
-                <Station
-                    x={kievskayaHanza[0] - 40}
-                    y={kievskayaHanza[1] - 40}
-                    fill={0x8f1120}
-                    zIndex={3}
-                />
-                <Station x={kievskayaHanza[0]} y={kievskayaHanza[1]} fill={0x8f1120} zIndex={3} />
+
                 <Station x={kurskayaHanza[0]} y={kurskayaHanza[1]} fill={0x8f1120} zIndex={3} />
 
                 {/* Salat line*/}
@@ -366,25 +426,14 @@ const App = () => {
                     fill={0xa5bd6a}
                     path={[
                         [
-                            kurskayaHanza[0] +
-                                (TORUS_LINE_CENTER + 50) * Math.cos(Math.radians(225)),
-                            kurskayaHanza[1] +
-                                (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)),
+                            kurskayaHanza[0] + (TORUS_LINE_CENTER + 50) * Math.cos(Math.radians(225)),
+                            kurskayaHanza[1] + (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)),
                         ],
                         [
-                            kurskayaHanza[0] +
-                                (TORUS_LINE_CENTER + 50) * Math.cos(Math.radians(225)),
-                            kurskayaHanza[1] +
-                                (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)) -
-                                200,
+                            kurskayaHanza[0] + (TORUS_LINE_CENTER + 50) * Math.cos(Math.radians(225)),
+                            kurskayaHanza[1] + (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225)) - 200,
                         ],
                     ]}
-                />
-                <Station
-                    x={kurskayaHanza[0] + (TORUS_LINE_CENTER + 50) * Math.cos(Math.radians(225))}
-                    y={kurskayaHanza[1] + (TORUS_LINE_CENTER + 50) * Math.sin(Math.radians(225))}
-                    fill={0x8f1120}
-                    zIndex={3}
                 />
 
                 {/* Orange line */}
@@ -403,43 +452,37 @@ const App = () => {
                         ],
                     ]}
                 />
-                <Station
-                    x={sretenskiyBulvar[0]}
-                    y={sretenskiyBulvar[1]}
-                    fill={0x8f1120}
-                    zIndex={3}
-                />
-                <Station
-                    x={prospektMira[0]}
-                    y={sretenskiyBulvar[1] - 40}
-                    fill={0x8f1120}
-                    zIndex={3}
-                />
-                <Station
-                    x={prospektMira[0]}
-                    y={sretenskiyBulvar[1] + 40}
-                    fill={0x8f1120}
-                    zIndex={3}
-                />
+
                 <StationHub
                     zIndex={2}
                     fill={0xffffff}
-                    path={[
-                        sretenskiyBulvar[0],
-                        sretenskiyBulvar[1],
-                        prospektMira[0],
-                        sretenskiyBulvar[1] - 40,
-                        prospektMira[0],
-                        sretenskiyBulvar[1] + 40,
+                    pathMap={[
+                        {
+                            coords: [sretenskiyBulvar[0], sretenskiyBulvar[1]],
+                            path: ['bottomLeft', 'topLeft'],
+                        },
+                        {
+                            coords: [prospektMira[0], sretenskiyBulvar[1] - 40],
+                            path: ['topLeft', 'bottomRight'],
+                        },
+                        {
+                            coords: [prospektMira[0], sretenskiyBulvar[1] + 40],
+                            path: ['topRight', 'bottomLeft'],
+                        },
                     ]}
                 />
-                <Station x={oktyabrskaya[0]} y={oktyabrskaya[1]} fill={0x8f1120} zIndex={3} />
-                <Station
-                    x={oktyabrskaya[0] + 35}
-                    y={oktyabrskaya[1] - 30}
-                    fill={0x8f1120}
-                    zIndex={3}
+
+                <StationHub
+                    zIndex={2}
+                    pathMap={[
+                        {
+                            coords: [oktyabrskaya[0] + 35, oktyabrskaya[1] - 30],
+                            path: ['topLeft', 'bottomRight'],
+                        },
+                        { coords: [oktyabrskaya[0], oktyabrskaya[1]], path: ['bottomRight', 'topLeft'] },
+                    ]}
                 />
+
                 <Station x={oktyabrskaya[0]} y={oktyabrskaya[1] + 50} fill={0x8f1120} zIndex={3} />
             </Container>
         </Stage>
